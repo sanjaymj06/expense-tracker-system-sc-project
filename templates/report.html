@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker - Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <div>
+        <h1>Expense Report</h1>
+        <p>Simple spending summary</p>
+      </div>
+      <nav class="nav-actions">
+        <a class="btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+        <a class="btn-danger" href="{{ url_for('logout') }}">Logout</a>
+      </nav>
+    </header>
 
+    <section class="report-grid">
+      <article class="card stat-card">
+        <h3>Total Expenses</h3>
+        <p>${{ "%.2f"|format(total_expenses) }}</p>
+      </article>
+      <article class="card stat-card">
+        <h3>Number of Expenses</h3>
+        <p>{{ number_of_expenses }}</p>
+      </article>
+      <article class="card stat-card">
+        <h3>Average Expense</h3>
+        <p>${{ "%.2f"|format(average_expense) }}</p>
+      </article>
+      <article class="card stat-card">
+        <h3>Highest Expense</h3>
+        <p>${{ "%.2f"|format(highest_expense) }}</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Expenses by Date</h2>
+      <canvas id="expenseChart" width="900" height="320"></canvas>
+      <p class="chart-note">Basic bar chart generated using plain JavaScript.</p>
+    </section>
+  </div>
+
+  <script>
+    const chartLabels = {{ chart_labels | tojson }};
+    const chartValues = {{ chart_values | tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
